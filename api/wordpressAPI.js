@@ -18,10 +18,7 @@ class WordpressAPI {
             var found = JSON.parse(body);
             var posts = found.posts;
             
-            // Get first one then random the other posts
-            // First one is the most related post
-            var result =  _.sample(posts, numberOfPost - 1)
-            result.splice(0, 0, posts[0]);
+            var result =  _.sample(posts, numberOfPost);
             result.map(rs => rs.title = util.decode(rs.title));
             callback(result);
         });
