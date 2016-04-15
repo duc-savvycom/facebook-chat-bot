@@ -2,13 +2,14 @@
 
 var bot = require("./../bot");
 
-var helloOutput = "Chào bạn, mềnh là bot tôi đi code dạo.";
-var unknownOutput = "Ad chưa dạy, éo bít trả lời thế lào.";
-var goodbyeOutput = "Tạm biệt, hẹn gặp lại.";
-var adInfoOutput = "Ad là Pham Huy Hoàng, đập chai cute thông minh tinh tế. Bạn vào đây xem thêm nhé: https://toidicodedao.com/about/";
-var botInfoOutput = "Mình là chatbox Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute!!";
-var chuiLonOutput = "Bot là người nhân hậu, không chửi thề. Cút ngay không bố đập vỡ cmn ass bây giờ!";
-var helpOutput = "Chào bạn, mềnh là bot tôi đi code dạo.\n Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n 1. Chào hỏi cơ bản. \n 2. Thông tin về ad và bot.\n 3. Tìm từ khóa với cú pháp [từ khóa].\n 4. Tìm theo category với cú pháp {category} (coding, linh tinh, nghề nghiệp).";
+var helloOutput = "Chào bạn, mềnh là bot tôi đi code dạo ^_^";
+var unknownOutput = "Ad chưa dạy, éo bít trả lời thế lào :'(";
+var goodbyeOutput = "Tạm biệt, hẹn gặp lại ;)";
+var adInfoOutput = "Ad là Pham Huy Hoàng, đập chai cute thông minh tinh tế <3. Bạn vào đây xem thêm nhé: https://toidicodedao.com/about/";
+var botInfoOutput = "Mình là chat bot Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute <3";
+var chuiLonOutput = "Bot là người nhân hậu, không chửi thề. Cút ngay không bố đập vỡ cmn ass bây giờ :v!";
+var thankyouOutput = "Không có chi. Rất vui vì đã giúp được cho bạn ^_^";
+var helpOutput = "Chào bạn, mềnh là bot tôi đi code dạo.\n Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n 1. Chào hỏi cơ bản. \n 2. Thông tin về ad và bot.\n 3. Tìm từ khóa với cú pháp [từ khóa].\n 4. Tìm theo category với cú pháp {category} (coding, linh tinh, nghề nghiệp)";
 
 var testCases = [
     ["hi", helloOutput],
@@ -17,6 +18,7 @@ var testCases = [
     ["chao ad", helloOutput],
     ["xin chao", helloOutput],
     ["hello", helloOutput],
+    ["hế nhô", helloOutput],
 
     ["ad la ai", adInfoOutput],
     ["ad la gì vậy", adInfoOutput],
@@ -31,6 +33,12 @@ var testCases = [
     ["your name", botInfoOutput],
     ["bot tên gì thế", botInfoOutput],
     ["mày tên là gì", botInfoOutput],
+    
+    ["cam on nhe", thankyouOutput],
+    ["cảm ơn nhiều", thankyouOutput],
+    ["cảm ơn", thankyouOutput],
+    ["thank you", thankyouOutput],
+    ["thank", thankyouOutput],
 
     ["dm", chuiLonOutput],
     ["dcm", chuiLonOutput],
