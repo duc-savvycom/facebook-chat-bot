@@ -3,12 +3,21 @@
 var api = require("./../api/wordpressAPI");
 
 api.searchPost(5, "lập trình viên", (rs) => {
+    console.log("Search result: ");
+    for (var r of rs) {
+        console.log(r);
+    }
+});
+
+api.searchPost(1, "presentation", (rs) => {
+    console.log("Search result: ");
     for (var r of rs) {
         console.log(r);
     }
 });
 
 api.searchCategory(5, "chuyện-nghề-nghiệp", (rs) => {
+    console.log("Category result: ");
     for (var r of rs) {
         console.log(r);
     }

@@ -25,4 +25,12 @@ function charToNumber(str) {
   return str;
 }
 
-module.exports = { removeUnicode, charToNumber };
+// fix the bug of string not decode properly
+function decode(str) {
+  return  str.replace(new RegExp("&#8211;", 'g'), '-')
+          .replace(new RegExp("&#8220;", 'g'), '"')
+          .replace(new RegExp("&#8221;", 'g'), '"')
+          .replace(new RegExp("&#8230;", 'g'), "...");
+}
+
+module.exports = { removeUnicode, charToNumber, decode };

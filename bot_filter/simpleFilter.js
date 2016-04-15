@@ -1,5 +1,5 @@
 "use strict";
-var util = require("./utilities");
+var util = require("./../utilities");
 var _ = require("underscore");
 
 class SimpleFilter {
