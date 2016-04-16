@@ -30,10 +30,10 @@ function decodeAndTruncate(str) {
   var str =  str.replace(new RegExp("&#8211;", 'g'), '-')
           .replace(new RegExp("&#8220;", 'g'), '"')
           .replace(new RegExp("&#8221;", 'g'), '"')
-          .replace(new RegExp("&#8230;", 'g'), "...");
+          .replace(new RegExp("&#8230;", 'g'), "…");
           
   if (str.length > 75)
-      return str.substring(0, 75) + '...';
+      return str.substring(0, 74) + '…';
    else
       return str;
 }
