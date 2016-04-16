@@ -19,7 +19,7 @@ class WordpressAPI {
             var posts = found.posts;
             
             var result =  _.sample(posts, numberOfPost);
-            result.map(rs => rs.title = util.decode(rs.title));
+            result.map(rs => rs.title = util.decodeAndTruncate(rs.title));
             callback(result);
         });
     }
@@ -34,7 +34,7 @@ class WordpressAPI {
             var found = JSON.parse(body);
             var posts = found.posts;
             var result = _.sample(posts, numberOfPost);
-            result.map(rs => rs.title = util.decode(rs.title));
+            result.map(rs => rs.title = util.decodeAndTruncate(rs.title));
             callback(result);
         });
     }
