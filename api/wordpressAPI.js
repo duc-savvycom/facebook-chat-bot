@@ -10,7 +10,7 @@ class WordpressAPI {
     }
 
     searchPost(numberOfPost, searchQuery, callback) {
-        var url = `${this.apiUrl}/${this.site}/posts/?search=${encodeURI(searchQuery)}&number=10&fields=title,URL,featured_image`;
+        var url = `${this.apiUrl}/${this.site}/posts/?search="${encodeURI(searchQuery)}"&number=10&fields=title,URL,featured_image`;
         request({
             url: url,
             method: "GET"
@@ -18,7 +18,7 @@ class WordpressAPI {
             var found = JSON.parse(body);
             var posts = found.posts;
             
-            var result =  _.sample(posts, numberOfPost);
+            var result =  posts.splice(0, numberOfPost);
             result.map(rs => rs.title = util.decodeAndTruncate(rs.title));
             callback(result);
         });
