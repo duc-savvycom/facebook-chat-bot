@@ -10,15 +10,29 @@ class WordpressAPI {
     }
 
     searchPost(numberOfPost, searchQuery, callback) {
-        var url = `${this.apiUrl}/${this.site}/posts/?search="${encodeURI(searchQuery)}"&number=10&fields=title,URL,featured_image`;
+        this._search(true, numberOfPost, searchQuery, result => {
+           if (result.length > 0) callback(result);
+           else {
+               // If found no result, remove "" from query and continue to search
+               this._search(false, numberOfPost, searchQuery, callback);
+           }
+        });
+    }
+    
+    _search(isSearchExactly, numberOfPost, searchQuery, callback) {
+        var url = `${this.apiUrl}/${this.site}/posts/?number=10&fields=title,URL,featured_image&search=${encodeURI(searchQuery)}`;
+        if (isSearchExactly) {
+            url = `${this.apiUrl}/${this.site}/posts/?number=10&fields=title,URL,featured_image&search="${encodeURI(searchQuery)}"`;
+        }
+        url = url.replace("#", "%23"); //Fix a bug with # character
+
         request({
             url: url,
             method: "GET"
         }, (err, response, body) => {
             var found = JSON.parse(body);
             var posts = found.posts;
-            
-            var result =  posts.splice(0, numberOfPost);
+            var result = posts.splice(0, numberOfPost);
             result.map(rs => rs.title = util.decodeAndTruncate(rs.title));
             callback(result);
         });
@@ -26,7 +40,7 @@ class WordpressAPI {
 
     searchCategory(numberOfPost, category, callback) {
         var url = `${this.apiUrl}/${this.site}/posts/?category=${encodeURI(category)}&number=10&fields=title,URL,featured_image`;
-        
+
         request({
             url: url,
             method: "GET"

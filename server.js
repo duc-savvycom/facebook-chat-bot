@@ -41,8 +41,13 @@ app.post('/webhook', function(req, res) {
               sendTextMessage(sender, reply);
             } else if (output.type == "post") {
               var posts = output.output;
-              sendTextMessage(sender, "Bạn đọc mấy bài này nhé ;)");
-              sendGenericMessage(sender, posts);
+              if (posts.length > 0) {
+                sendTextMessage(sender, "Bạn đọc mấy bài này nhé ;)");
+                sendGenericMessage(sender, posts);
+              } else {
+                sendTextMessage(sender, "Bot không tìm thấy bài nào, xin lỗi nhé :'(");
+              }
+
             }
           });
           
