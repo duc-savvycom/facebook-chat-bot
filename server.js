@@ -42,17 +42,17 @@ app.post('/webhook', function(req, res) {
             } else if (output.type == "post") {
               var posts = output.output;
               if (posts.length > 0) {
-                sendTextMessage(sender, "Bạn đọc mấy bài này nhé ;)");
+                sendTextMessage(sender, "These articles might be helpful for you ;)");
                 sendGenericMessage(sender, posts);
               } else {
-                sendTextMessage(sender, "Bot không tìm thấy bài nào, xin lỗi nhé :'(");
+                sendTextMessage(sender, "Sorry, I can not find any article for you :'(");
               }
 
             }
           });
           
         } else if (message.message.attachments) {
-          sendTextMessage(sender, "Ad chưa code, gửi hình bot không hiểu gì đâu :'(.");
+          sendTextMessage(sender, "Sorry I can't understand this :'(.");
         }
       }
     }
@@ -107,14 +107,14 @@ function sendGenericMessage(sender, posts) {
   
   var messageElements = posts.map(post => {
     return {
-      title: "Bài viết",
+      title: "Article",
       subtitle: post.title,
       item_url: post.URL,
       image_url: post.featured_image,
       buttons: [{
         type: "web_url",
         url: post.URL,
-        title: "Xem bài viết"
+        title: "Read this"
       }]
     }
   });
