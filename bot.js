@@ -25,8 +25,8 @@ class Bot {
         var thankyouFilter = new SimpleFilter(["cảm ơn", "thank you", "thank", "helpful"], "You're welcome ^_^");
         var helpFilter = new SimpleFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"], "Currently, I can help you with finding articles in toidicodedao.com - an IT blog.\nYou can find by keyword (in []) or category in ({}).\nTry \"show me 3 articles with [java].\" or \"I need help with {coding}\".");
         
-        var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi", "bot ten gi", "bot ten la gi", "your name"],
-        "I'm a simple bot called TDCD, I can help you find articles in toidicodedao blog <3");
+        var botInfoFilter = new SimpleFilter(["may la ai", "who are you", "may ten gi", "may ten la gi", "bot ten gi", "bot ten la gi", "your name"],
+        "I'm a simple bot called TDCD, I can help you find articles in toidicodedao blog <3. Please type -help to see what I can do!");
         var adInfoFilter = new SimpleFilter(["ad la ai", "hoi ve ad", "ad ten gi",
               "ai viet ra may", "who made you", "ad la gi", "ad ten la gi"], 
         "You can know more information about my creator here: https://toidicodedao.com/about/");
