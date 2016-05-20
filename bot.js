@@ -2,6 +2,7 @@
 var SimpleFilter = require("./bot_filter/simpleFilter");
 var CategoryFilter = require("./bot_filter/categoryFilter");
 var SearchFilter = require("./bot_filter/searchFilter");
+var TagFilter = require("./bot_filter/tagFilter");
 
 class Bot {
     constructor() {
@@ -37,7 +38,7 @@ class Bot {
         "Please use polite language :)!");
         
         
-        this.filters = [new SearchFilter(), new CategoryFilter(), adInfoFilter, botInfoFilter, chuiLonFilter, thankyouFilter, helpFilter, goodbyeFilter, helloFilter];
+        this.filters = [new SearchFilter(), new CategoryFilter(), adInfoFilter, botInfoFilter, chuiLonFilter, thankyouFilter, helpFilter, goodbyeFilter, helloFilter, new TagFilter()];
     }
 
     chat(input, callback) {
