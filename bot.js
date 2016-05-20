@@ -38,7 +38,7 @@ class Bot {
         "Please use polite language :)!");
         
         
-        this.filters = [new SearchFilter(), new CategoryFilter(), adInfoFilter, botInfoFilter, chuiLonFilter, thankyouFilter, helpFilter, goodbyeFilter, helloFilter, new TagFilter()];
+        this.filters = [new SearchFilter(), new CategoryFilter(), new TagFilter(), adInfoFilter, botInfoFilter, chuiLonFilter, thankyouFilter, helpFilter, goodbyeFilter, helloFilter];
     }
 
     chat(input, callback) {

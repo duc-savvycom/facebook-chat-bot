@@ -56,8 +56,6 @@ class WordpressAPI {
     searchByTag(numberOfPost, tag, callback) {
         var url = `${this.apiUrl}/${this.site}/posts/?tag=${tag}&number=30&fields=title,URL,featured_image`;
 
-    console.log(url);
-
         request({
             url: url,
             method: "GET"
