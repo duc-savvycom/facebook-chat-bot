@@ -41,6 +41,7 @@ class Bot {
         */
         
         this.filters = [new SearchFilter(), new CategoryFilter(), new TagFilter(), adInfoFilter, botInfoFilter, categoryFilter, chuiLonFilter, thankyouFilter, helpFilter, goodbyeFilter, helloFilter];
+        this.filters = [new SearchFilter(), new CategoryFilter(), new TagFilter(), adInfoFilter, botInfoFilter, chuiLonFilter, thankyouFilter, helpFilter, goodbyeFilter, helloFilter];
     }
 
     chat(input, callback) {
