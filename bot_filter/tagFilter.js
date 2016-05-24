@@ -226,6 +226,10 @@ var tags = [{
     "slug": "sach",
     "name": "sách"
 }, {
+    "slug": "code",
+    "name": "code"
+},
+{
     "slug": "linq",
     "name": "linq"
 }, {
@@ -250,6 +254,16 @@ var tags = [{
     "slug": "fpt",
     "name": "fpt"
 }, {
+    "slug": "web",
+    "name": "web"
+}, {
+    "slug": "c",
+    "name": "c#"
+}, {
+    "slug": "c",
+    "name": "c #"
+},
+{
     "slug": "php",
     "name": "PHP"
 }];

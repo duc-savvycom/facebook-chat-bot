@@ -1,4 +1,5 @@
 var http = require('http');
+var log = require('simple-node-logger').createSimpleLogger('project.log');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -29,6 +30,7 @@ app.get('/webhook', function(req, res) {
 app.post('/webhook', function(req, res) {
   var entries = req.body.entry;
   for (var entry of entries) {
+    log.info(entries);
     var messaging = entry.messaging;
     for (var message of messaging) {
       var sender = message.sender.id;
@@ -42,17 +44,19 @@ app.post('/webhook', function(req, res) {
             } else if (output.type == "post") {
               var posts = output.output;
               if (posts.length > 0) {
-                sendTextMessage(sender, "These articles might be helpful for you ;)");
+                //sendTextMessage(sender, "These articles might be helpful for you ;)");
+                sendTextMessage(sender, "Bạn xem thử mấy bài này nhé ;)");
                 sendGenericMessage(sender, posts);
               } else {
-                sendTextMessage(sender, "Sorry, I can not find any article for you :'(");
+                sendTextMessage(sender, "Xin lỗi mình không tim được bài nào ;)");
+                //sendTextMessage(sender, "Sorry, I can not find any article for you :'(");
               }
 
             }
           });
           
         } else if (message.message.attachments) {
-          sendTextMessage(sender, "Sorry I can't understand this :'(.");
+          sendTextMessage(sender, "Xin lỗi mình ko hiểu cái lày :'(");
         }
       }
     }
