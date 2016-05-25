@@ -260,6 +260,9 @@ var tags = [{
     "slug": "c",
     "name": "c#"
 }, {
+    "slug": "js",
+    "name": "js"
+}, {
     "slug": "c",
     "name": "c #"
 },

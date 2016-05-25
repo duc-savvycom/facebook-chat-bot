@@ -5,6 +5,7 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var request = require("request");
 var bot = require("./bot");
+var fbAPI = require("./api/facebookAPI");
 
 var express = require('express');
 
@@ -35,20 +36,21 @@ app.post('/webhook', function(req, res) {
     for (var message of messaging) {
       var sender = message.sender.id;
       if (message.message) {
+        // If user send text
         if (message.message.text) {
           var text = message.message.text;
           bot.chat(text, output => {
             if (output.type == "text") {
               var reply = output.output;
-              sendTextMessage(sender, reply);
+              fbAPI.sendTextMessage(sender, reply);
             } else if (output.type == "post") {
               var posts = output.output;
               if (posts.length > 0) {
                 //sendTextMessage(sender, "These articles might be helpful for you ;)");
-                sendTextMessage(sender, "Bạn xem thử mấy bài này nhé ;)");
-                sendGenericMessage(sender, posts);
+                fbAPI.sendTextMessage(sender, "Bạn xem thử mấy bài này nhé ;)");
+                fbAPI.sendGenericMessage(sender, posts);
               } else {
-                sendTextMessage(sender, "Xin lỗi mình không tim được bài nào ;)");
+                fbAPI.sendTextMessage(sender, "Xin lỗi mình không tim được bài nào ;)");
                 //sendTextMessage(sender, "Sorry, I can not find any article for you :'(");
               }
 
@@ -56,7 +58,7 @@ app.post('/webhook', function(req, res) {
           });
           
         } else if (message.message.attachments) {
-          sendTextMessage(sender, "Xin lỗi mình ko hiểu cái lày :'(");
+          fbAPI.sendAttachmentBack(sender, message.message.attachments[0]);
         }
       }
     }
@@ -74,70 +76,3 @@ server.listen(app.get('port') ,app.get('ip'), function() {
 });
 
 
-var token = "EAAQ7fVPeyokBAOJeRcxo0VwZBGMWUNQD9OmAfxGKJyYepiOtzaioGZCZBDHTTTSRtTCcc4HWXywizNAx5IfZBKN3GbLWiOyVrSRNfDtPewNJDbMn921WZB1pPRTBdhshQmVGRaX6K9DaCWfgAHEAb1WVBNVpU1eu7Ot4ApVqbaQZDZD";
-
-function sendTextMessage(sender, text) {
-  var messageData = {
-    text:text
-  };
-  request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token:token},
-    method: 'POST',
-    json: {
-      recipient: {id:sender},
-      message: messageData,
-    }
-  }, function(error, response, body) {
-    if (error) {
-      console.log('Error sending message: ', error);
-    } else if (response.body.error) {
-      console.log('Error: ', response.body.error);
-    }
-  });
-}
-
-function sendGenericMessage(sender, posts) {
-  
-  var messageData = {
-    "attachment": {
-      "type": "template",
-      "payload": {
-        "template_type": "generic",
-        "elements": []
-      }
-    }
-  };
-  
-  var messageElements = posts.map(post => {
-    return {
-      title: "Article",
-      subtitle: post.title,
-      item_url: post.URL,
-      image_url: post.featured_image,
-      buttons: [{
-        type: "web_url",
-        url: post.URL,
-        title: "Read this"
-      }]
-    }
-  });
-  
-  messageData.attachment.payload.elements = messageElements;
-  
-  request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {access_token:token},
-    method: 'POST',
-    json: {
-      recipient: {id:sender},
-      message: messageData,
-    }
-  }, function(error, response, body) {
-    if (error) {
-      console.log('Error sending message: ', error);
-    } else if (response.body.error) {
-      console.log('Error: ', response.body.error);
-    }
-  });
-}
