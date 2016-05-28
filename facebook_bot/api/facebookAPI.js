@@ -6,6 +6,32 @@ class FacebookAPI {
     constructor() {
         this._token = process.env.FB_TOKEN ||
             "EAAWjaJdcz14BALW4x9r13aKcwZATJ84qVANzIh4nP4Jn5GQ3YFJevqZCmtXLc27AcnKHnB7vOKibxXB3llxuvhHE1a92DZAlJNhZC0SQedmZCjguUykCXZAZAmLWA4pwt6bpQAERa2nQf2ZBeBmaUPBaZBnnE04RDptqC1BLrb7msAwZDZD";
+        this._storedName = {};
+    }
+
+    getSenderName(senderID) {
+        var that = this;
+        return new Promise((resolve, reject) => {
+            if (that._storedName[senderID]) {
+                resolve(that._storedName[senderID]);
+            }
+            else {
+
+                request({
+                    url: `https://graph.facebook.com/v2.6/${senderID}`,
+                    qs: {
+                        access_token: that._token
+                    },
+                    method: 'GET',
+
+                }, function(error, response, body) {
+                    var person = JSON.parse(body);
+                    console.log(person);
+                    that._storedName[senderID] = person.first_name;
+                    resolve(person.first_name);
+                });
+            }
+        });
     }
 
     sendTextMessage(sender, text) {
@@ -33,7 +59,7 @@ class FacebookAPI {
             }
         });
     }
-    
+
     sendAttachmentBack(sender, attachment) {
         var messageData = {
             attachment: attachment

@@ -1,9 +1,12 @@
 "use strict";
 
 var bot = require("./../bot");
+var async = require("asyncawait/async");
+var await = require("asyncawait/await");
+
 
 var helloOutput = "Chào bạn, mềnh là bot tôi đi code dạo ^_^";
-var unknownOutput = "Ad chưa dạy, éo bít trả lời thế lào :'(";
+var unknownOutput = "Xin lỗi bot còn nhỏ dại nên không hiểu. Bạn gõ -help xem!";
 var goodbyeOutput = "Tạm biệt, hẹn gặp lại ;)";
 var adInfoOutput = "Ad là Pham Huy Hoàng, đập chai cute thông minh tinh tế <3. Bạn vào đây xem thêm nhé: https://toidicodedao.com/about/";
 var botInfoOutput = "Mình là chat bot Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute <3";
@@ -33,7 +36,7 @@ var testCases = [
     ["your name", botInfoOutput],
     ["bot tên gì thế", botInfoOutput],
     ["mày tên là gì", botInfoOutput],
-    
+
     ["cam on nhe", thankyouOutput],
     ["cảm ơn nhiều", thankyouOutput],
     ["cảm ơn", thankyouOutput],
@@ -64,11 +67,12 @@ var testCases = [
     ["cho mình hỏi về", unknownOutput],
 ];
 
-for (var testCase of testCases) {
-    var input = testCase[0];
-    var output = testCase[1];
+async(() => {
+    for (var testCase of testCases) {
+        var input = testCase[0];
+        var output = testCase[1];
 
-    bot.chat(input, chatOutput => {
+        var chatOutput = await (bot.chat(input));
         if (chatOutput.output != output) {
             console.log("input: " + input);
             console.log("except: " + output);
@@ -77,5 +81,5 @@ for (var testCase of testCases) {
         else {
             console.log("Passed");
         }
-    });
-}
+    }
+})();

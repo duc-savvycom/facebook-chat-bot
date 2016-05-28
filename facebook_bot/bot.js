@@ -3,12 +3,16 @@ var SimpleFilter = require("./bot_filter/simpleFilter");
 var CategoryFilter = require("./bot_filter/categoryFilter");
 var SearchFilter = require("./bot_filter/searchFilter");
 var TagFilter = require("./bot_filter/tagFilter");
+var async = require("asyncawait/async");
+var await = require("asyncawait/await");
 
-class Bot {
+var fbAPI = require("./api/facebookAPI");
+
+class BotAsync {
     constructor() {
         
-        var helloFilter = new SimpleFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot tôi đi code dạo ^_^");
-        var goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
+        this._helloFilter = new SimpleFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot tôi đi code dạo ^_^");
+        this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
         var helpFilter = new SimpleFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"], "Chào bạn, mềnh là bot tôi đi code dạo.\n Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n 1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n 2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n 4. Tìm theo category với cú pháp {category} (Tự dưng muốn học {coding})");
         
         var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi", "bot ten gi", "bot ten la gi", "your name"],
@@ -40,19 +44,54 @@ class Bot {
         "Please use polite language :)!");
         */
         
-        this.filters = [new SearchFilter(), new CategoryFilter(), new TagFilter(), adInfoFilter, botInfoFilter, categoryFilter, chuiLonFilter, thankyouFilter, helpFilter, goodbyeFilter, helloFilter];
+        this._filters = [new SearchFilter(), new CategoryFilter(), new TagFilter(), adInfoFilter, botInfoFilter, categoryFilter, chuiLonFilter, thankyouFilter, helpFilter, this._goodbyeFilter, this._helloFilter];
+    }
+    
+    setName(name) {
+        this._helloFilter.setOutput(`Chào ${name}, mềnh là bot tôi đi code dạo ^_^`);
+        this._goodbyeFilter.setOutput(`Tạm biệt ${name}, hẹn gặp lại ;)`);
     }
 
-    chat(input, callback) {
-        for (var filter of this.filters) {
+    chat(input) {
+        for (var filter of this._filters) {
             if (filter.isMatch(input)) {
                 filter.process(input);
-                filter.reply(input, callback);
-                return;
+                return filter.reply(input);
             }
         }
-        callback({output: "Xin lỗi bot còn nhỏ dại nên không hiểu. Bạn gõ -help xem!", type:"text"});
+        return async(() => {
+            return await({output: "Xin lỗi bot còn nhỏ dại nên không hiểu. Bạn gõ -help xem!", type:"text"});
+        })();
+    }
+    
+    reply(sender, textInput) {
+        async(() => {
+            var name = await (fbAPI.getSenderName(sender));
+            this.setName(name);
+
+            var botReply = await (this.chat(textInput));
+            if (botReply.type == "text") {
+              var reply = botReply.output;
+              fbAPI.sendTextMessage(sender, reply);
+            }
+            else if (botReply.type == "post") {
+              var posts = botReply.output;
+              if (posts.length > 0) {
+                //sendTextMessage(sender, "These articles might be helpful for you ;)");
+                fbAPI.sendTextMessage(sender, "Bạn xem thử mấy bài này nhé ;)");
+                fbAPI.sendGenericMessage(sender, posts);
+              }
+              else {
+                fbAPI.sendTextMessage(sender, "Xin lỗi mình không tim được bài nào ;)");
+                //sendTextMessage(sender, "Sorry, I can not find any article for you :'(");
+              }
+            }
+        })();
+    }
+    
+    sendAttachmentBack(sender, attachment) {
+        fbAPI.sendAttachmentBack(sender, attachment);
     }
 }
 
-module.exports = new Bot();
+module.exports = new BotAsync();

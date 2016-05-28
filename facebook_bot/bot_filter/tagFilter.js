@@ -2,6 +2,8 @@
 var util = require("./../utilities");
 var _ = require("underscore");
 var api = require("./../api/wordpressAPI");
+var async = require("asyncawait/async");
+var await = require("asyncawait/await");
 
 var tags = [{
     "slug": "series-javascript-sida",
@@ -295,13 +297,11 @@ class TagFilter {
             return input.indexOf(util.removeUnicode(tag.name)) > -1;
         });
     }
-    reply(input, callback) {
-        api.searchByTag(this.number, this.tag, result => {
-            callback({
-                output: result,
-                type: 'post'
-            });
-        });
+    reply(input) {
+        return async(() => {
+            var result = await(api.searchByTag(this.number, this.tag));
+            return {output: result, type: 'post'};
+        })();
     }
 }
 
