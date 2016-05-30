@@ -2,8 +2,7 @@
 var util = require("./../utilities");
 var _ = require("underscore");
 var api = require("./../api/wordpressAPI");
-var async = require("asyncawait/async");
-var await = require("asyncawait/await");
+var BOT_REPLY_TYPE = require("./../constants").BOT_REPLY_TYPE;
 
 class SearchFilter {
     process(input) {
@@ -25,10 +24,13 @@ class SearchFilter {
         return match !== null;
     }
     reply(input) {
-        return async(() => {
-            var result = await(api.searchPost(this.number, this.query));
-            return {output: result, type: 'post'};
-        })();
+        return api.searchPost(this.number, this.query)
+            .then(result => {
+                return {
+                    output: result,
+                    type: BOT_REPLY_TYPE.POST
+                };
+            });
     }
 }
 

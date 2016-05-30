@@ -6,19 +6,19 @@ class FacebookAPI {
     constructor() {
         this._token = process.env.FB_TOKEN ||
             "EAAWjaJdcz14BALW4x9r13aKcwZATJ84qVANzIh4nP4Jn5GQ3YFJevqZCmtXLc27AcnKHnB7vOKibxXB3llxuvhHE1a92DZAlJNhZC0SQedmZCjguUykCXZAZAmLWA4pwt6bpQAERa2nQf2ZBeBmaUPBaZBnnE04RDptqC1BLrb7msAwZDZD";
-        this._storedName = {};
+        this._storedUsers = {};
     }
 
-    getSenderName(senderID) {
+    getSenderName(senderId) {
         var that = this;
         return new Promise((resolve, reject) => {
-            if (that._storedName[senderID]) {
-                resolve(that._storedName[senderID]);
+            if (that._storedUsers[senderId]) {
+                resolve(that._storedUsers[senderId]);
             }
             else {
 
                 request({
-                    url: `https://graph.facebook.com/v2.6/${senderID}`,
+                    url: `https://graph.facebook.com/v2.6/${senderId}`,
                     qs: {
                         access_token: that._token
                     },
@@ -26,15 +26,14 @@ class FacebookAPI {
 
                 }, function(error, response, body) {
                     var person = JSON.parse(body);
-                    console.log(person);
-                    that._storedName[senderID] = person.first_name;
-                    resolve(person.first_name);
+                    that._storedUsers[senderId] = person;
+                    resolve(person);
                 });
             }
         });
     }
 
-    sendTextMessage(sender, text) {
+    sendTextMessage(senderId, text) {
         var messageData = {
             text: text
         };
@@ -46,7 +45,7 @@ class FacebookAPI {
             method: 'POST',
             json: {
                 recipient: {
-                    id: sender
+                    id: senderId
                 },
                 message: messageData,
             }
@@ -60,7 +59,41 @@ class FacebookAPI {
         });
     }
 
-    sendAttachmentBack(sender, attachment) {
+    sendButtonMessage(senderId, text, buttons) {
+        var messageData = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": text,
+                    "buttons": buttons
+                }
+            }
+        };
+
+        request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {
+                access_token: this._token
+            },
+            method: 'POST',
+            json: {
+                recipient: {
+                    id: senderId
+                },
+                message: messageData,
+            }
+        }, function(error, response, body) {
+            if (error) {
+                console.log('Error sending message: ', error);
+            }
+            else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+        });
+    }
+
+    sendAttachmentBack(senderId, attachment) {
         var messageData = {
             attachment: attachment
         };
@@ -72,7 +105,7 @@ class FacebookAPI {
             method: 'POST',
             json: {
                 recipient: {
-                    id: sender
+                    id: senderId
                 },
                 message: messageData,
             }
@@ -86,7 +119,7 @@ class FacebookAPI {
         });
     }
 
-    sendGenericMessage(sender, posts) {
+    sendGenericMessage(senderId, posts) {
 
         var messageData = {
             "attachment": {
@@ -121,7 +154,7 @@ class FacebookAPI {
             method: 'POST',
             json: {
                 recipient: {
-                    id: sender
+                    id: senderId
                 },
                 message: messageData,
             }

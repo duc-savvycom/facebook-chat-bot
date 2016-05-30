@@ -1,8 +1,7 @@
 "use strict";
 var util = require("./../utilities");
 var _ = require("underscore");
-var async = require("asyncawait/async");
-var await = require("asyncawait/await");
+var BOT_REPLY_TYPE = require("./../constants").BOT_REPLY_TYPE;
 
 class SimpleFilter {
     constructor(inputText, output) {
@@ -10,6 +9,9 @@ class SimpleFilter {
         this._output = output;
     }
     process(input) {}
+    setOutput(output) {
+        this._output = output;
+    }
     isMatch(input) {
         input = util.removeUnicode(input);
         return _.some(this._inputText, function(t) {
@@ -17,16 +19,12 @@ class SimpleFilter {
         });
     }
     reply(input) {
-        return async(() => {
-            return await ({
-                output: this._output,
-                type: "text"
-            });
-        })();
+        return new Promise((resolve, reject) => resolve({
+            output: this._output,
+            type: BOT_REPLY_TYPE.TEXT
+        }));
     }
-    setOutput(output) {
-        this._output = output;
-    }
+
 }
 
 

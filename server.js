@@ -34,16 +34,21 @@ app.post('/webhook', function(req, res) {
     log.info(entries);
     var messaging = entry.messaging;
     for (var message of messaging) {
-      var sender = message.sender.id;
+      var senderId = message.sender.id;
       if (message.message) {
         // If user send text
         if (message.message.text) {
-          bot.reply(sender, message.message.text);
+          bot.reply(senderId, message.message.text);
         }
         // If user send attachment
         else if (message.message.attachments) {
-          bot.sendAttachmentBack(sender, message.message.attachments[0]);
+          bot.sendAttachmentBack(senderId, message.message.attachments[0]);
         }
+      }
+      // If user click button
+      else if (message.postback) {
+        var payload = message.postback.payload;
+        bot.processPostback(senderId, payload);
       }
     }
   }

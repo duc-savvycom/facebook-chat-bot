@@ -2,8 +2,7 @@
 var util = require("./../utilities");
 var _ = require("underscore");
 var api = require("./../api/wordpressAPI");
-var async = require("asyncawait/async");
-var await = require("asyncawait/await");
+var BOT_REPLY_TYPE = require("./../constants").BOT_REPLY_TYPE;
 
 class CategoryFilter {
     process(input) {
@@ -28,10 +27,13 @@ class CategoryFilter {
     }
     reply(input) {
         // Return a promise so that it can be awaited
-        return async(() => {
-            var result = await(api.searchCategory(this.number, this.category));
-            return {output: result, type: 'post'};
-        })();
+        return api.searchCategory(this.number, this.category)
+            .then(result => {
+                return {
+                    output: result,
+                    type: BOT_REPLY_TYPE.POST
+                };
+            });
     }
 }
 
