@@ -18,7 +18,9 @@ class SimsimiAPI {
                 var rs = JSON.parse(body);
                 if (rs.result === 100) {
                     resolve(rs.response);
-                } else {
+                } else if(rs.result === 509) {
+                    resolve("Các bạn chat nhiều quá API hết 100 limit cmnr. Mai bạn quay lại nhé :'(. ");
+                }else {
                     reject();
                 }
             });
