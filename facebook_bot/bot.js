@@ -4,6 +4,7 @@ var CategoryFilter = require("./bot_filter/categoryFilter");
 var SearchFilter = require("./bot_filter/searchFilter");
 var TagFilter = require("./bot_filter/tagFilter");
 var ButtonFilter = require("./bot_filter/buttonFilter");
+var EndFilter = require("./bot_filter/endFilter");
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
 var fbAPI = require("./api/facebookAPI");
@@ -17,7 +18,7 @@ class BotAsync {
 
         //this._helloFilter = new SimpleFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot tôi đi code dạo ^_^");
 
-        this._helloFilter = new ButtonFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào", "ê ku", "ê mày"],
+        this._helloFilter = new ButtonFilter(["halo", "hế nhô", "he lo", "hello", "chào", "xin chào", "ê ku", "helo", "a lo", "ê mày"],
             "Chào bạn, mềnh là bot tôi đi code dạo ^_^. Bạn thích đọc gì nào?", [{
                 title: "Nâng cao trình độ",
                 type: BUTTON_TYPE.POSTBACK,
@@ -41,7 +42,9 @@ class BotAsync {
                 payload: PAYLOAD.SEE_CATEGORIES
             }]);
 
-        var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi", "bot ten gi", "bot ten la gi", "your name"],
+        var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi", 
+        "ban ten la gi", "ban ten gi",
+        "bot ten gi", "bot ten la gi", "your name"],
             "Mình là chat bot Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute <3");
         var adInfoFilter = new SimpleFilter(["ad la ai", "hoi ve ad", "ad ten gi", "who is ad",
                 "ad la thằng nào", "thong tin ve ad", "ad dau",
@@ -62,7 +65,7 @@ class BotAsync {
         this._filters = [new SearchFilter(), new CategoryFilter(), new TagFilter(),
             adInfoFilter, botInfoFilter, categoryFilter,
             chuiLonFilter, thankyouFilter, helpFilter,
-            this._goodbyeFilter, this._helloFilter, testFilter
+            this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter()
         ];
     }
 
@@ -78,17 +81,6 @@ class BotAsync {
                 return filter.reply(input);
             }
         }
-        return new Promise((resolve, reject) => {
-            resolve({
-                output: "Xin lỗi bot còn nhỏ dại nên không hiểu. Bạn bấm \"Hướng dẫn\" hoặc gõ help xem?",
-                buttons: [{
-                    title: "Hướng dẫn",
-                    type: BUTTON_TYPE.POSTBACK,
-                    payload: PAYLOAD.HELP
-                }],
-                type: BOT_REPLY_TYPE.BUTTONS
-            });
-        });
     }
 
     reply(senderId, textInput) {
