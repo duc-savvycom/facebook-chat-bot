@@ -1,11 +1,11 @@
 "use strict";
 var request = require("request");
-
+var atob = require("atob");
 
 class SimsimiAPI {
     constructor() {
-        this._key = "99eb625e-0add-4419-b73c-42620c99ed5d";
-        this._url = `http://sandbox.api.simsimi.com/request.p?key=${this._key}&lc=vn&text=`;
+        this._key = process.env.SIM_TOKEN || atob("ODZlZmJlNjktY2U1Yi00MzZmLWJhNGEtMWE5NDMxMGUyMGY2");
+        this._url = `http://api.simsimi.com/request.p?key=${this._key}&lc=vn&text=`;
     }
 
     getMessage(text) {

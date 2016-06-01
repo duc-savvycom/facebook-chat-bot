@@ -11,7 +11,9 @@
   "dependencies": {
     "async": "~0.2.8",
     "asyncawait": "^1.0.3",
+    "atob": "^2.0.3",
     "body-parser": "^1.15.0",
+    "btoa": "^1.1.2",
     "express": "~3.2.4",
     "morgan": "^1.7.0",
     "request": "^2.71.0",

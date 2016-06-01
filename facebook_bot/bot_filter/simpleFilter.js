@@ -15,6 +15,9 @@ class SimpleFilter {
     isMatch(input) {
         input = util.removeUnicode(input);
         return _.some(this._inputText, function(t) {
+            // For hi, dm, vl, only match if input is 2 characters
+            if ((t.length == 2) && input.length > 2) return false;
+            
             return input.indexOf(util.removeUnicode(t)) > -1;
         });
     }

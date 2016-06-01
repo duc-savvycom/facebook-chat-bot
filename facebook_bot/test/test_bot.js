@@ -4,17 +4,21 @@ var bot = require("./../bot");
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
 
-
-var helloOutput = "Chào bạn, mềnh là bot tôi đi code dạo ^_^";
+var spamOutput = "Server yếu lắm, đừng spam tội bot";
+var helloOutput = "Chào bạn, mềnh là bot tôi đi code dạo ^_^. Bạn thích đọc gì nào?";
 var unknownOutput = "Xin lỗi bot còn nhỏ dại nên không hiểu. Bạn gõ -help xem!";
 var goodbyeOutput = "Tạm biệt, hẹn gặp lại ;)";
 var adInfoOutput = "Ad là Pham Huy Hoàng, đập chai cute thông minh tinh tế <3. Bạn vào đây xem thêm nhé: https://toidicodedao.com/about/";
 var botInfoOutput = "Mình là chat bot Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute <3";
 var chuiLonOutput = "Bot là người nhân hậu, không chửi thề. Cút ngay không bố đập vỡ cmn ass bây giờ :v!";
 var thankyouOutput = "Không có chi. Rất vui vì đã giúp được cho bạn ^_^";
-var helpOutput = "Chào bạn, mềnh là bot tôi đi code dạo.\n Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n 1. Chào hỏi cơ bản. \n 2. Thông tin về ad và bot.\n 3. Tìm từ khóa với cú pháp [từ khóa].\n 4. Tìm theo category với cú pháp {category} (coding, linh tinh, nghề nghiệp)";
+var helpOutput = `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.`;
 
 var testCases = [
+    ["a", spamOutput],
+    ["1", spamOutput],
+    ["2", spamOutput],
+    
     ["hi", helloOutput],
     ["chào", helloOutput],
     ["chao", helloOutput],
@@ -28,8 +32,10 @@ var testCases = [
     ["cho minh hoi ve ad", adInfoOutput],
     ["ad là ai vậy bot?", adInfoOutput],
     ["cho minh hỏi về ad", adInfoOutput],
+    ["admin", adInfoOutput],
 
     ["may la ai", botInfoOutput],
+    ["bot oi bot ah", botInfoOutput],
     ["may ten gi", botInfoOutput],
     ["mày là ai", botInfoOutput],
     ["bot tên gì", botInfoOutput],
@@ -61,10 +67,7 @@ var testCases = [
     ["giúp đỡ", helpOutput],
     ["help", helpOutput],
     ["giup minh", helpOutput],
-    ["giup voi", helpOutput],
-
-    ["blah blah blah", unknownOutput],
-    ["cho mình hỏi về", unknownOutput],
+    ["giup voi", helpOutput]
 ];
 
 async(() => {
