@@ -1,28 +1,25 @@
 "use strict";
 
-var api = require("./../api/wordpressAPI");
+var wpAPI = require("./../api/wordpressAPI");
+var simsimiAPI = require("./../api/simsimiAPI");
 
+var async = require("asyncawait/async");
+var await = require("asyncawait/await");
 
-api.searchByTag(5, "javascript", (rs) => {
-    console.log("Search result: ");
-    for (var r of rs) {
-        console.log("Search by Tag");
-        console.log(r);
-    }
-});
+async(() =>{
+    let results = await([
+        wpAPI.searchByTag(5, "javascript"),
+        wpAPI.searchPost(5, "review sách"),
+        wpAPI.searchCategory(5, "chuyện-nghề-nghiệp")
+        ]);
+    console.log(results);
+})();
 
-api.searchPost(5, "review sách", (rs) => {
-    console.log("Search result: ");
-    for (var r of rs) {
-        console.log("Search by post");
-        console.log(r);
-    }
-});
-
-api.searchCategory(5, "chuyện-nghề-nghiệp", (rs) => {
-    console.log("Category result: ");
-    for (var r of rs) {
-        console.log("Search by Category");
-        console.log(r);
-    }
-});
+async(() =>{
+    let results = await([
+        simsimiAPI.getMessageFree("anh iu em"),
+        simsimiAPI.getMessageFree("anh nhớ em"),
+        simsimiAPI.getMessageFree("em ăn gì chưa?"),
+    ]);
+    console.log(results);
+})();

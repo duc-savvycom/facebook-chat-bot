@@ -6,10 +6,11 @@ class SimsimiAPI {
     constructor() {
         this._key = process.env.SIM_TOKEN || atob("ODZlZmJlNjktY2U1Yi00MzZmLWJhNGEtMWE5NDMxMGUyMGY2");
         this._url = `http://api.simsimi.com/request.p?key=${this._key}&lc=vn&text=`;
+        
+        this._freeUrl = "http://newapp.simsimi.com/v1/simsimi/talkset?uid=10034&av=6.7.1&lc=vn&cc=vn&tz=Vietnam&os=a&isFilter=0&message_sentence=";
     }
 
     getMessage(text) {
-        var url =  this._url + encodeURI(text);
         return new Promise((resolve, reject) => {
             request({
                 url: this._url + encodeURI(text),
@@ -23,6 +24,20 @@ class SimsimiAPI {
                 }else {
                     reject();
                 }
+            });
+        });
+    }
+    
+    // Got by decompiling SimSimi APK. Not reliable but free
+    getMessageFree(text) {
+        return new Promise((resolve, reject) => {
+            request({
+                url: this._freeUrl + encodeURI(text),
+                method: "GET"
+            }, (err, response, body) => {
+                var rs = JSON.parse(body);
+                var reply = rs.simsimi_talk_set.answers[0].sentence;
+                resolve(reply);               
             });
         });
     }
