@@ -19,7 +19,7 @@ class BotAsync {
 
         //this._helloFilter = new SimpleFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot tôi đi code dạo ^_^");
 
-        this._helloFilter = new ButtonFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào", "ê ku", "helo", "alo", "a lo", "ê mày"],
+        this._helloFilter = new ButtonFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào", "helo", "alo", "ê mày"],
             "Chào bạn, mềnh là bot tôi đi code dạo ^_^. Bạn thích đọc gì nào?", [{
                 title: "Nâng cao trình độ",
                 type: BUTTON_TYPE.POSTBACK,
