@@ -44,7 +44,7 @@ class BotAsync {
             }]);
 
         var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi", 
-        "ban ten la gi", "ban ten gi", "bot",
+        "ban ten la gi", "ban ten gi", "ban la gi",
         "bot ten gi", "bot ten la gi", "your name"],
             "Mình là chat bot Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute <3");
         var adInfoFilter = new SimpleFilter(["ad la ai", "hoi ve ad", "ad ten gi", "who is ad",
