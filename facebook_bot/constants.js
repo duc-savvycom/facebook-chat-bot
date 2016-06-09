@@ -2,6 +2,7 @@ const BOT_REPLY_TYPE = {
         TEXT: 'TEXT',
         POST: 'POST',
         BUTTONS: 'BUTTONS',
+        IMAGE: 'IMAGE'
 };
 
 const BUTTON_TYPE = {
@@ -14,7 +15,8 @@ const PAYLOAD = {
     CAREER_POST: 'CAREER_POST',
     GENERIC_POST: 'GENERIC_POST',
     HELP : 'HELP',
-    SEE_CATEGORIES: 'SEE_CATEGORIES'
+    SEE_CATEGORIES: 'SEE_CATEGORIES',
+    GIRL : 'GIRL'
 };
 
 const PAGE_TAGS = [{

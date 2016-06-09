@@ -4,8 +4,8 @@ var atob = require("atob");
 
 class FacebookAPI {
     constructor() {
-        this._token = process.env.FB_TOKEN || 
-        atob("RUFBV2phSmRjejE0QkFMVzR4OXIxM2FLY3daQVRKODRxVkFOekloNG5QNEpuNUdRM1lGSmV2cVpDbXRYTGMyN0FjbktIbkI3dk9LaWJ4WEIzbGx4dXZoSEUxYTkyRFpBbEpOaFpDMFNRZWRtWkNqZ3VVeWtDWFpBWkFtTFdBNHB3dDZicFFBRVJhMm5RZjJaQmVCbWFVUEJhWkJubkUwNFJEcHRxQzFCTHJiN21zQXdaRFpE");
+        this._token = process.env.FB_TOKEN ||
+            atob("RUFBV2phSmRjejE0QkFMVzR4OXIxM2FLY3daQVRKODRxVkFOekloNG5QNEpuNUdRM1lGSmV2cVpDbXRYTGMyN0FjbktIbkI3dk9LaWJ4WEIzbGx4dXZoSEUxYTkyRFpBbEpOaFpDMFNRZWRtWkNqZ3VVeWtDWFpBWkFtTFdBNHB3dDZicFFBRVJhMm5RZjJaQmVCbWFVUEJhWkJubkUwNFJEcHRxQzFCTHJiN21zQXdaRFpE");
         this._storedUsers = {};
     }
 
@@ -96,6 +96,37 @@ class FacebookAPI {
     sendAttachmentBack(senderId, attachment) {
         var messageData = {
             attachment: attachment
+        };
+        request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {
+                access_token: this._token
+            },
+            method: 'POST',
+            json: {
+                recipient: {
+                    id: senderId
+                },
+                message: messageData,
+            }
+        }, function(error, response, body) {
+            if (error) {
+                console.log('Error sending message: ', error);
+            }
+            else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+        });
+    }
+
+    sendImage(senderId, imageUrl) {
+        var messageData = {
+            attachment: {
+                type: "image",
+                payload: {
+                    url: imageUrl
+                }
+            }
         };
         request({
             url: 'https://graph.facebook.com/v2.6/me/messages',

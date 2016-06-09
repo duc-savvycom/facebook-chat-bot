@@ -1,10 +1,19 @@
 "use strict";
 
 var bot = require("./../bot");
-
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
 
+async(() =>{
+    let result = await([
+        bot.chat("@gái"),
+        bot.chat("@gai"),
+        bot.chat("@girl"),
+        bot.chat("cho mấy tấm hình gái")
+        ]);
+    console.log(result);   
+})();
+/*
 async(() =>{
     let result = await([
         bot.chat("Help me with javascript please"),
@@ -22,3 +31,4 @@ async(() =>{
     ]);
     console.log(result);   
 })();
+*/

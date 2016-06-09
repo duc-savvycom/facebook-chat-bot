@@ -6,6 +6,7 @@ var SearchFilter = require("./bot_filter/searchFilter");
 var TagFilter = require("./bot_filter/tagFilter");
 var ButtonFilter = require("./bot_filter/buttonFilter");
 var EndFilter = require("./bot_filter/endFilter");
+var GirlFilter = require("./bot_filter/girlFilter");
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
 var fbAPI = require("./api/facebookAPI");
@@ -34,15 +35,21 @@ class BotAsync {
                 payload: PAYLOAD.GENERIC_POST
             }]);
 
-
+        var girlFilter = new GirlFilter(["@gái", "@girl", "hình gái"]);    
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"],
-            `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.`, 
+            `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\B5. Xem hình gái xinh @gái.`, 
             [{
                 title: "Danh mục bài viết",
                 type: BUTTON_TYPE.POSTBACK,
                 payload: PAYLOAD.SEE_CATEGORIES
-            }]);
-
+            },
+            {
+                title: "Xem hình gái",
+                type: BUTTON_TYPE.POSTBACK,
+                payload: PAYLOAD.GIRL
+            }
+            ]);
+            
         var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi", 
         "ban ten la gi", "ban ten gi", "ban la gi",
         "bot ten gi", "bot ten la gi", "your name"],
@@ -56,7 +63,7 @@ class BotAsync {
         "gioi qua", "good job", "hay nhi", "hay ghe"], "Không có chi. Rất vui vì đã giúp được cho bạn ^_^");
         var categoryFilter = new SimpleFilter(["category", "danh muc", "the loai", "chu de"],
             "Hiện tại blog có 3 category: coding, linh tinh, và nghề nghiệp");
-        var chuiLonFilter = new SimpleFilter(["dm", "đậu xanh", "rau má", "dcm", "vkl", "vl", "du me", "may bi dien",
+        var chuiLonFilter = new SimpleFilter(["dm", "dmm", "đậu xanh", "rau má", "dcm", "vkl", "vl", "du me", "may bi dien",
                 "bố láo", "ngu the", "me may", "ccmm", "ccmn", "bot ngu", "đờ mờ", "fuck", "fuck you"
             ],
             "Bot là người nhân hậu, không chửi thề. Cút ngay không bố đập vỡ cmn ass bây giờ :v!");
@@ -64,7 +71,8 @@ class BotAsync {
             "Đừng test nữa, mấy hôm nay người ta test nhiều quá bot mệt lắm rồi :'(");
         this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
 
-        this._filters = [new SpamFilter(), new SearchFilter(), new CategoryFilter(), new TagFilter(),
+        this._filters = [new SpamFilter(), 
+            girlFilter, new SearchFilter(), new CategoryFilter(), new TagFilter(),
             adInfoFilter, botInfoFilter, categoryFilter,
             chuiLonFilter, thankyouFilter, helpFilter,
             this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter()
@@ -109,11 +117,11 @@ class BotAsync {
                     let buttons = botReply.buttons;
                     fbAPI.sendButtonMessage(senderId, output, buttons);
                     break;
-
+                case BOT_REPLY_TYPE.IMAGE:
+                    fbAPI.sendImage(senderId, output);
+                    break;
                 default:
-                    // code
             }
-
         })();
     }
 
@@ -140,6 +148,9 @@ class BotAsync {
                     break;
                 case PAYLOAD.HELP:
                     this.reply(senderId, "-help");
+                    break;
+                case PAYLOAD.GIRL:
+                    this.reply(senderId, "@girl");
                     break;
                 default:
                     console.log("Unknown payload: " + payload);

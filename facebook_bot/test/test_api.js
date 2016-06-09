@@ -1,10 +1,22 @@
 "use strict";
 
 var wpAPI = require("./../api/wordpressAPI");
+var girlAPI = require("./../api/girlAPI");
 var simsimiAPI = require("./../api/simsimiAPI");
+var btoa = require("btoa");
+
 
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
+
+async(() =>{
+    let results = await([
+        girlAPI.getRandomGirlImage(),
+        girlAPI.getRandomGirlImage(),
+        girlAPI.getRandomGirlImage(),
+    ]);
+    console.log(results);
+})();
 
 async(() =>{
     let results = await([
