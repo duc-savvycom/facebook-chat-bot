@@ -35,7 +35,7 @@ class BotAsync {
                 payload: PAYLOAD.GENERIC_POST
             }]);
 
-        var girlFilter = new GirlFilter(["@gái", "@girl", "hình gái"]);    
+        var girlFilter = new GirlFilter(["@gái", "@girl", "hình gái", "anh gai"]);    
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"],
             `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\B5. Xem hình gái xinh @gái.`, 
             [{
@@ -118,6 +118,7 @@ class BotAsync {
                     fbAPI.sendButtonMessage(senderId, output, buttons);
                     break;
                 case BOT_REPLY_TYPE.IMAGE:
+                    fbAPI.sendTextMessage(senderId, "Đợi tí có liền, đồ dại gái hà ^^");
                     fbAPI.sendImage(senderId, output);
                     break;
                 default:

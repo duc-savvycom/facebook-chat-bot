@@ -7,7 +7,6 @@ var await = require("asyncawait/await");
 var express = require('express');
 
 var bot = require("./facebook_bot/bot");
-var fbAPI = require("./facebook_bot/api/facebookAPI");
 
 var app = express();
 app.use(logger('dev'));
