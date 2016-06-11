@@ -6,13 +6,38 @@ var await = require("asyncawait/await");
 
 async(() =>{
     let result = await([
+        bot.chat("@jav"),
+        bot.chat("jav idol"),
+        bot.chat("jap")
+        ]);
+    console.log("Jav");
+    console.log(result);   
+})();
+
+
+async(() =>{
+    let result = await([
+        bot.chat("@sexy"),
+        bot.chat("@fap"),
+        bot.chat("gai sexy")
+        ]);
+    console.log("sexy");
+    console.log(result);   
+})();
+
+
+async(() =>{
+    let result = await([
         bot.chat("@gái"),
         bot.chat("@gai"),
         bot.chat("@girl"),
         bot.chat("cho mấy tấm hình gái")
         ]);
+        console.log("girl");
     console.log(result);   
 })();
+
+
 /*
 async(() =>{
     let result = await([

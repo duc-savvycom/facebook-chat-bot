@@ -6,7 +6,7 @@ var SearchFilter = require("./bot_filter/searchFilter");
 var TagFilter = require("./bot_filter/tagFilter");
 var ButtonFilter = require("./bot_filter/buttonFilter");
 var EndFilter = require("./bot_filter/endFilter");
-var GirlFilter = require("./bot_filter/girlFilter");
+var ImageFilter = require("./bot_filter/imageFilter");
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
 var fbAPI = require("./api/facebookAPI");
@@ -14,6 +14,8 @@ var fbAPI = require("./api/facebookAPI");
 var BOT_REPLY_TYPE = require("./constants").BOT_REPLY_TYPE;
 var BUTTON_TYPE = require("./constants").BUTTON_TYPE;
 var PAYLOAD = require("./constants").PAYLOAD;
+
+var girlAPI = require("./api/girlAPI");
 
 class BotAsync {
     constructor() {
@@ -35,9 +37,15 @@ class BotAsync {
                 payload: PAYLOAD.GENERIC_POST
             }]);
 
-        var girlFilter = new GirlFilter(["@gái", "@girl", "hình gái", "anh gai"]);    
+        var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
+        var sexyGirlFilter = new ImageFilter(["@sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"], 
+                                girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); //From xinh nhẹ nhàng 
+        var javGirlFilter = new ImageFilter(["@jav", "jav", "japan anti virus", "idol", "jap"],
+                                girlAPI.getRandomSexyImage.bind(girlAPI, "1517626138559626", 225)); //From hội JAV
+        
+        
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"],
-            `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\B5. Xem hình gái xinh @gái.`, 
+            `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\n5. Xem hình gái xinh @gái.`, 
             [{
                 title: "Danh mục bài viết",
                 type: BUTTON_TYPE.POSTBACK,
@@ -72,7 +80,8 @@ class BotAsync {
         this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
 
         this._filters = [new SpamFilter(), 
-            girlFilter, new SearchFilter(), new CategoryFilter(), new TagFilter(),
+            girlFilter, sexyGirlFilter, javGirlFilter,
+            new SearchFilter(), new CategoryFilter(), new TagFilter(),
             adInfoFilter, botInfoFilter, categoryFilter,
             chuiLonFilter, thankyouFilter, helpFilter,
             this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter()

@@ -5,19 +5,28 @@ var atob = require("atob");
 
 class GirlAPI {
     constructor() {
-        this._key = process.env.TUMBLR_TOKEN || atob("STVKWUNTVnFueXBET1lrYjdZdHBZN1JLME91ZmRHT0ZKZ1FTNUZFaXp2eFNHcXEwRjA=") ;
-        this._url = `https://api.tumblr.com/v2/blog/xkcn.info/posts/photo?api_key=${this._key}`;
+        this._tumblrKey = process.env.TUMBLR_TOKEN || atob("STVKWUNTVnFueXBET1lrYjdZdHBZN1JLME91ZmRHT0ZKZ1FTNUZFaXp2eFNHcXEwRjA=") ;
+        this._tumblrUrl = "https://api.tumblr.com/v2/blog/xkcn.info/posts/photo";
+        
+        this._fbToken = process.env.FB_TOKEN ||
+            atob("RUFBV2phSmRjejE0QkFMVzR4OXIxM2FLY3daQVRKODRxVkFOekloNG5QNEpuNUdRM1lGSmV2cVpDbXRYTGMyN0FjbktIbkI3dk9LaWJ4WEIzbGx4dXZoSEUxYTkyRFpBbEpOaFpDMFNRZWRtWkNqZ3VVeWtDWFpBWkFtTFdBNHB3dDZicFFBRVJhMm5RZjJaQmVCbWFVUEJhWkJubkUwNFJEcHRxQzFCTHJiN21zQXdaRFpE");
+        this._pageId = "637434912950811"; // Xinh nhe nhang page
+        this._fbUrl = `https://graph.facebook.com/v2.6/${this._pageId}/photos/`;
     }
     
     // Only get 1 image each time from xkcn.info
     getRandomGirlImage() {
         var max = 4500; // Get random image with index from 0 to 4500
         var randomIndex = Math.floor((Math.random() * max));
-        var apiUrl = `${this._url}&limit=1&offset=${randomIndex}`;
         
         return new Promise((resolve, reject) => {
             request({
-                url: apiUrl,
+                url: this._tumblrUrl,
+                qs: {
+                    api_key : this._tumblrKey,
+                    limit: 1,
+                    offset: randomIndex
+                },
                 method: "GET"
             }, (err, response, body) => {
                 if (err) {
@@ -27,6 +36,33 @@ class GirlAPI {
                 
                 var rs = JSON.parse(body);
                 var imageUrl = rs.response.posts[0].photos[0].original_size.url;
+                resolve(imageUrl);
+            });
+        });
+    }
+    
+    getRandomSexyImage(pageId, maxIndex) {
+        var randomIndex = Math.floor((Math.random() * maxIndex));
+
+        return new Promise((resolve, reject) => {
+            request({
+                url: `https://graph.facebook.com/v2.6/${pageId}/photos/`,
+                qs: {
+                    type : "uploaded",
+                    fields: "images",
+                    limit: 1,
+                    offset: randomIndex,
+                    access_token: this._fbToken
+                },
+                method: "GET"
+            }, (err, response, body) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                
+                var rs = JSON.parse(body);
+                var imageUrl = rs.data[0].images[1].source; // Get smaller image
                 resolve(imageUrl);
             });
         });

@@ -16,7 +16,8 @@ const PAYLOAD = {
     GENERIC_POST: 'GENERIC_POST',
     HELP : 'HELP',
     SEE_CATEGORIES: 'SEE_CATEGORIES',
-    GIRL : 'GIRL'
+    GIRL : 'GIRL',
+    GIRL_SEXY : 'GIRL_SEXY'
 };
 
 const PAGE_TAGS = [{
