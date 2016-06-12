@@ -80,8 +80,8 @@ class BotAsync {
         this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
 
         this._filters = [new SpamFilter(), 
-            girlFilter, sexyGirlFilter, javGirlFilter,
             new SearchFilter(), new CategoryFilter(), new TagFilter(),
+            girlFilter, sexyGirlFilter, javGirlFilter,
             adInfoFilter, botInfoFilter, categoryFilter,
             chuiLonFilter, thankyouFilter, helpFilter,
             this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter()
