@@ -39,10 +39,11 @@ class BotAsync {
 
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
         var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"], 
-                                girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); //From xinh nhẹ nhàng 
+                                girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); // From xinh nhẹ nhàng 
         var javGirlFilter = new ImageFilter(["@jav", "jav", "japan anti virus", "idol", "jap"],
-                                girlAPI.getRandomSexyImage.bind(girlAPI, "1517626138559626", 225)); //From hội JAV
-        
+                                girlAPI.getRandomSexyImage.bind(girlAPI, "1517626138559626", 225)); // From hội JAV
+        var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
+                                girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
         
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"],
             `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\n5. Xem hình gái xinh @gái.`, 
@@ -81,7 +82,7 @@ class BotAsync {
 
         this._filters = [new SpamFilter(), 
             new SearchFilter(), new CategoryFilter(), new TagFilter(),
-            girlFilter, sexyGirlFilter, javGirlFilter,
+            girlFilter, sexyGirlFilter, javGirlFilter, bikiniGirlFilter,
             adInfoFilter, botInfoFilter, categoryFilter,
             chuiLonFilter, thankyouFilter, helpFilter,
             this._goodbyeFilter, this._helloFilter, testFilter, new EndFilter()

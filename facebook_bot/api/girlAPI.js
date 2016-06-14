@@ -62,7 +62,7 @@ class GirlAPI {
                 }
                 
                 var rs = JSON.parse(body);
-                var imageUrl = rs.data[0].images[1].source; // Get smaller image
+                var imageUrl = rs.data[0].images[0].source; 
                 resolve(imageUrl);
             });
         });
