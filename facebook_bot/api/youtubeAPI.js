@@ -5,7 +5,7 @@ var _ = require("underscore");
 
 class YoutubeAPI {
     constructor() {
-        this._token = process.env.YOUTUBE_TOKEN || "AIzaSyC7R2v8_9LeXRm15kiP3eg63ZCJE-VZv9k";
+        this._token = process.env.YOUTUBE_TOKEN || atob("QUl6YVN5QzdSMnY4XzlMZVhSbTE1a2lQM2VnNjNaQ0pFLVZadjlr");
         this._url = "https://www.googleapis.com/youtube/v3/search";
     }
 
