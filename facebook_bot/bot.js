@@ -4,18 +4,22 @@ var SpamFilter = require("./bot_filter/spamFilter");
 var CategoryFilter = require("./bot_filter/categoryFilter");
 var SearchFilter = require("./bot_filter/searchFilter");
 var TagFilter = require("./bot_filter/tagFilter");
+var YoutubeFilter = require("./bot_filter/youtubeFilter");
 var ButtonFilter = require("./bot_filter/buttonFilter");
 var EndFilter = require("./bot_filter/endFilter");
 var ImageFilter = require("./bot_filter/imageFilter");
+
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
-var fbAPI = require("./api/facebookAPI");
 
 var BOT_REPLY_TYPE = require("./constants").BOT_REPLY_TYPE;
 var BUTTON_TYPE = require("./constants").BUTTON_TYPE;
 var PAYLOAD = require("./constants").PAYLOAD;
 
 var girlAPI = require("./api/girlAPI");
+var fbAPI = require("./api/facebookAPI");
+var ulti = require("./utilities");
+
 
 class BotAsync {
     constructor() {
@@ -44,6 +48,8 @@ class BotAsync {
                                 girlAPI.getRandomSexyImage.bind(girlAPI, "1517626138559626", 225)); // From hội JAV
         var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
                                 girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
+                                
+        var youtubeFilter = new YoutubeFilter(["@nhạc", "@music", "@youtube", "@yt"]);
         
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"],
             `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\n5. Xem hình gái xinh @gái.`, 
@@ -81,7 +87,7 @@ class BotAsync {
         this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
 
         this._filters = [new SpamFilter(), 
-            new SearchFilter(), new CategoryFilter(), new TagFilter(),
+            new SearchFilter(), new CategoryFilter(), new TagFilter(), youtubeFilter,
             girlFilter, sexyGirlFilter, javGirlFilter, bikiniGirlFilter,
             adInfoFilter, botInfoFilter, categoryFilter,
             chuiLonFilter, thankyouFilter, helpFilter,
@@ -117,11 +123,15 @@ class BotAsync {
                 case BOT_REPLY_TYPE.POST:
                     if (output.length > 0) {
                         fbAPI.sendTextMessage(senderId, "Bạn xem thử mấy bài này nhé ;)");
-                        fbAPI.sendGenericMessage(senderId, output);
+                        fbAPI.sendGenericMessage(senderId, ulti.postsToPayloadElements(output));
                     }
                     else {
                         fbAPI.sendTextMessage(senderId, "Xin lỗi mình không tim được bài nào ;)");
                     }
+                    break;
+                case BOT_REPLY_TYPE.VIDEOS:
+                    fbAPI.sendTextMessage(senderId, "Có ngay đây. Xem thoải mái ;)");
+                    fbAPI.sendGenericMessage(senderId, ulti.videosToPayloadElements(output));
                     break;
                 case BOT_REPLY_TYPE.BUTTONS:
                     let buttons = botReply.buttons;

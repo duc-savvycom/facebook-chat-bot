@@ -6,6 +6,18 @@ var await = require("asyncawait/await");
 
 async(() =>{
     let result = await([
+        bot.chat("@music sơn tùng"),
+        bot.chat("@nhạc trịnh công sơn"),
+        bot.chat("@yt miu lê")
+        ]);
+    console.log("youtube");
+    console.log(JSON.stringify(result));   
+})();
+
+
+/*
+async(() =>{
+    let result = await([
         bot.chat("@jav"),
         bot.chat("jav idol"),
         bot.chat("jap")
@@ -36,7 +48,7 @@ async(() =>{
         console.log("girl");
     console.log(result);   
 })();
-
+*/
 
 /*
 async(() =>{

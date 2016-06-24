@@ -2,7 +2,8 @@ const BOT_REPLY_TYPE = {
         TEXT: 'TEXT',
         POST: 'POST',
         BUTTONS: 'BUTTONS',
-        IMAGE: 'IMAGE'
+        IMAGE: 'IMAGE',
+        VIDEOS: 'VIDEOS'
 };
 
 const BUTTON_TYPE = {

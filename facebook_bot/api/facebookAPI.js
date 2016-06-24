@@ -150,8 +150,7 @@ class FacebookAPI {
         });
     }
 
-    sendGenericMessage(senderId, posts) {
-
+    sendGenericMessage(senderId, payloadElements) {
         var messageData = {
             "attachment": {
                 "type": "template",
@@ -162,21 +161,7 @@ class FacebookAPI {
             }
         };
 
-        var messageElements = posts.map(post => {
-            return {
-                title: "Article",
-                subtitle: post.title,
-                item_url: post.URL,
-                image_url: post.featured_image,
-                buttons: [{
-                    type: "web_url",
-                    url: post.URL,
-                    title: "Read this"
-                }]
-            }
-        });
-
-        messageData.attachment.payload.elements = messageElements;
+        messageData.attachment.payload.elements = payloadElements;
         request({
             url: 'https://graph.facebook.com/v2.6/me/messages',
             qs: {
