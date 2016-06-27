@@ -44,8 +44,8 @@ class BotAsync {
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
         var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"], 
                                 girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); // From xinh nhẹ nhàng 
-        var javGirlFilter = new ImageFilter(["@jav", "jav", "japan anti virus", "idol", "jap"],
-                                girlAPI.getRandomSexyImage.bind(girlAPI, "1517626138559626", 225)); // From hội JAV
+        var javGirlFilter = new SimpleFilter(["@jav", "jav", "japan anti virus", "idol", "jap"],
+                                "API Jav sập rồi, lúc khác quay lại nhé =))"); // From hội JAV
         var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
                                 girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
                                 

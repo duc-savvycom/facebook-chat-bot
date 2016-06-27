@@ -4,6 +4,7 @@ var bot = require("./../bot");
 var async = require("asyncawait/async");
 var await = require("asyncawait/await");
 
+/*
 async(() =>{
     let result = await([
         bot.chat("@music sơn tùng"),
@@ -13,9 +14,9 @@ async(() =>{
     console.log("youtube");
     console.log(JSON.stringify(result));   
 })();
+*/
 
 
-/*
 async(() =>{
     let result = await([
         bot.chat("@jav"),
@@ -26,7 +27,7 @@ async(() =>{
     console.log(result);   
 })();
 
-
+/*
 async(() =>{
     let result = await([
         bot.chat("@sexy"),
