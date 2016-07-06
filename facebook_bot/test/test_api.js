@@ -3,7 +3,7 @@
 var wpAPI = require("./../api/wordpressAPI");
 var girlAPI = require("./../api/girlAPI");
 var simsimiAPI = require("./../api/simsimiAPI");
-var youtubeAPI = require("./../api/youtubeAPI");
+var googleAPI = require("./../api/googleAPI");
 var faceRecAPI = require("./../api/faceRecAPI");
 var btoa = require("btoa");
 
@@ -15,23 +15,43 @@ var await = require("asyncawait/await");
 
 async(() =>{
     let results = await([
-        faceRecAPI.analyzeEmo("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/12985368_1051808628222443_8663602569549609913_n.jpg?oh=f60344027f7bf89e2319c33f3b38a131&oe=57F73973"),
-        faceRecAPI.analyzeEmo("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/11896111_894350157302322_7536939130403438858_n.jpg?oh=1c582314e24c06d38b8697d6a4b61fe0&oe=57F989E0"),
-        faceRecAPI.analyzeEmo("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/13255988_10204631022895720_248165748981936486_n.jpg?oh=7ac32219e03ade5c2f2d29f9fd856598&oe=5830181C"),
-    ]);
+        faceRecAPI.analyzeImage("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/12985368_1051808628222443_8663602569549609913_n.jpg?oh=f60344027f7bf89e2319c33f3b38a131&oe=57F73973")   ]);
     console.log(results);
 })();
 
 /*
 async(() =>{
     let results = await([
-        youtubeAPI.findVideos("sơn tùng"),
-        youtubeAPI.findVideos("hkt"),
-        youtubeAPI.findVideos("trịnh công sơn"),
+        faceRecAPI.analyzeEmo("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/12985368_1051808628222443_8663602569549609913_n.jpg?oh=f60344027f7bf89e2319c33f3b38a131&oe=57F73973"),
+        faceRecAPI.analyzeEmo("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/11896111_894350157302322_7536939130403438858_n.jpg?oh=1c582314e24c06d38b8697d6a4b61fe0&oe=57F989E0"),
+        faceRecAPI.analyzeEmo("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/13255988_10204631022895720_248165748981936486_n.jpg?oh=7ac32219e03ade5c2f2d29f9fd856598&oe=5830181C"),
     ]);
     console.log(results);
 })();
 */
+
+/*
+async(() =>{
+    let results = await([
+        googleAPI.translate("hello"),
+        googleAPI.translate("dog"),
+        googleAPI.translate("lovely dog"),
+    ]);
+    console.log(results);
+})();
+
+async(() =>{
+
+    let results = await([
+        googleAPI.findVideos("sơn tùng"),
+        googleAPI.findVideos("hkt"),
+        googleAPI.findVideos("trịnh công sơn"),
+    ]);
+    console.log(results);
+})();
+*/
+
+
 /*
 async(() =>{
     let results = await([

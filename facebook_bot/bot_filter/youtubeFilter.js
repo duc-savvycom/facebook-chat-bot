@@ -1,7 +1,7 @@
 "use strict";
 var util = require("./../utilities");
 var SimpleFilter = require("./simpleFilter");
-var api = require("./../api/youtubeAPI");
+var api = require("./../api/googleAPI");
 var BOT_REPLY_TYPE = require("./../constants").BOT_REPLY_TYPE;
 
 // Same as simple filter, but return text and buttons

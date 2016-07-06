@@ -3,10 +3,12 @@ var request = require("request");
 var atob = require("atob");
 var _ = require("underscore");
 
-class YoutubeAPI {
+class GoogleAPI {
     constructor() {
         this._token = process.env.YOUTUBE_TOKEN || atob("QUl6YVN5QzdSMnY4XzlMZVhSbTE1a2lQM2VnNjNaQ0pFLVZadjlr");
         this._url = "https://www.googleapis.com/youtube/v3/search";
+        
+        this._translateUrl = "https://www.googleapis.com/language/translate/v2";
     }
 
     findVideos(query) {
@@ -41,6 +43,28 @@ class YoutubeAPI {
         });
     }
     
+    translate(text) {
+        return new Promise((resolve, reject) => {
+            request({
+                url: this._translateUrl,
+                qs: {
+                    target: "vi",
+                    q: text,
+                    key: this._token
+                },
+                json: true,
+                method: "GET"
+            }, (err, response, body) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                
+                var translated = body.data.translations[0].translatedText;
+                resolve(translated);
+            });
+        });
+    }
 }
 
-module.exports = new YoutubeAPI();
+module.exports = new GoogleAPI();

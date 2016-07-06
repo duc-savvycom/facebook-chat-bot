@@ -43,32 +43,30 @@ class BotAsync {
             }]);
 
         var girlFilter = new ImageFilter(["@gái", "@girl", "hình gái", "anh gai", "cute girl"], girlAPI.getRandomGirlImage.bind(girlAPI)); // From xkcn.info
-        var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"], 
-                                girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); // From xinh nhẹ nhàng 
+        var sexyGirlFilter = new ImageFilter(["@sexy", "sexy", "fap", "anh nong", "hot girl", "hinh sexy", "gai sexy", "sexy girl"],
+            girlAPI.getRandomSexyImage.bind(girlAPI, "637434912950811", 760)); // From xinh nhẹ nhàng 
         var javGirlFilter = new SimpleFilter(["@jav", "jav", "japan anti virus", "idol", "jap"],
-                                "API Jav sập rồi, lúc khác quay lại nhé =))"); // From hội JAV
+            "API Jav sập rồi, lúc khác quay lại nhé =))"); // From hội JAV
         var bikiniGirlFilter = new ImageFilter(["@bikini", "bikini", "ao tam", "do boi"],
-                                girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
-                                
+            girlAPI.getRandomSexyImage.bind(girlAPI, "169971983104176", 1070)); // From hội bikini
+
         var youtubeFilter = new YoutubeFilter(["@nhạc", "@music", "@youtube", "@yt"]);
-        
+
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"],
-            `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\n5. Xem hình gái xinh với cú pháp @gái.\n6. Tìm nhạc với cú pháp @music (@music sơn tùng)`, 
-            [{
+            `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\n5. Xem hình gái xinh với cú pháp @gái.\n6. Tìm nhạc với cú pháp @music (@music sơn tùng)`, [{
                 title: "Danh mục bài viết",
                 type: BUTTON_TYPE.POSTBACK,
                 payload: PAYLOAD.SEE_CATEGORIES
-            },
-            {
+            }, {
                 title: "Xem hình gái",
                 type: BUTTON_TYPE.POSTBACK,
                 payload: PAYLOAD.GIRL
-            }
-            ]);
-            
-        var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi", 
-        "ban ten la gi", "ban ten gi", "ban la gi",
-        "bot ten gi", "bot ten la gi", "your name"],
+            }]);
+
+        var botInfoFilter = new SimpleFilter(["may la ai", "may ten gi", "may ten la gi",
+                "ban ten la gi", "ban ten gi", "ban la gi",
+                "bot ten gi", "bot ten la gi", "your name"
+            ],
             "Mình là chat bot Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute <3");
         var adInfoFilter = new SimpleFilter(["ad la ai", "hoi ve ad", "ad ten gi", "who is ad",
                 "ad la thằng nào", "thong tin ve ad", "ad dau", "admin",
@@ -76,7 +74,8 @@ class BotAsync {
             ],
             "Ad là Pham Huy Hoàng, đập chai cute thông minh tinh tế <3. Bạn vào đây xem thêm nhé: https://toidicodedao.com/about/");
         var thankyouFilter = new SimpleFilter(["cảm ơn", "thank you", "thank", "nice", "hay qua",
-        "gioi qua", "good job", "hay nhi", "hay ghe"], "Không có chi. Rất vui vì đã giúp được cho bạn ^_^");
+            "gioi qua", "good job", "hay nhi", "hay ghe"
+        ], "Không có chi. Rất vui vì đã giúp được cho bạn ^_^");
         var categoryFilter = new SimpleFilter(["category", "danh muc", "the loai", "chu de"],
             "Hiện tại blog có 3 category: coding, linh tinh, và nghề nghiệp");
         var chuiLonFilter = new SimpleFilter(["dm", "dmm", "đậu xanh", "rau má", "dcm", "vkl", "vl", "du me", "may bi dien",
@@ -87,7 +86,7 @@ class BotAsync {
             "Đừng test nữa, mấy hôm nay người ta test nhiều quá bot mệt lắm rồi :'(");
         this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
 
-        this._filters = [new SpamFilter(), 
+        this._filters = [new SpamFilter(),
             new SearchFilter(), new CategoryFilter(), new TagFilter(), youtubeFilter,
             girlFilter, sexyGirlFilter, javGirlFilter, bikiniGirlFilter,
             adInfoFilter, botInfoFilter, categoryFilter,
@@ -150,12 +149,17 @@ class BotAsync {
     sendAttachmentBack(senderId, attachment) {
         fbAPI.sendAttachmentBack(senderId, attachment);
     }
-    
+
     processImage(senderId, imageUrl) {
-        async(() => {
-            var reply = await (faceRecAPI.analyzeEmo(imageUrl));
+
+        faceRecAPI.analyzeEmo(imageUrl).then((reply) => {
             fbAPI.sendTextMessage(senderId, reply);
-        })();
+        }).catch((error) => {
+            // If find no face, analyze image
+            faceRecAPI.analyzeImage(imageUrl).then((reply) => {
+                fbAPI.sendTextMessage(senderId, reply);
+            })
+        });
     }
 
     processPostback(senderId, payload) {
