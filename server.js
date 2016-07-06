@@ -41,7 +41,10 @@ app.post('/webhook', function(req, res) {
         }
         // If user send attachment
         else if (message.message.attachments) {
-          bot.sendAttachmentBack(senderId, message.message.attachments[0]);
+          //bot.sendAttachmentBack(senderId, message.message.attachments[0]);
+          
+          var imageUrl = message.message.attachments[0].payload.url;
+          bot.processImage(senderId, imageUrl);
         }
       }
       // If user click button

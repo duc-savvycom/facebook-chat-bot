@@ -18,6 +18,7 @@ var PAYLOAD = require("./constants").PAYLOAD;
 
 var girlAPI = require("./api/girlAPI");
 var fbAPI = require("./api/facebookAPI");
+var faceRecAPI = require("./api/faceRecAPI");
 var ulti = require("./utilities");
 
 
@@ -146,8 +147,15 @@ class BotAsync {
         })();
     }
 
-    sendAttachmentBack(sender, attachment) {
-        fbAPI.sendAttachmentBack(sender, attachment);
+    sendAttachmentBack(senderId, attachment) {
+        fbAPI.sendAttachmentBack(senderId, attachment);
+    }
+    
+    processImage(senderId, imageUrl) {
+        async(() => {
+            var reply = await (faceRecAPI.analyzeEmo(imageUrl));
+            fbAPI.sendTextMessage(senderId, reply);
+        })();
     }
 
     processPostback(senderId, payload) {
