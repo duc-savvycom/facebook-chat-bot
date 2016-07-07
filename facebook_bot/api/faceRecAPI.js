@@ -37,7 +37,7 @@ class FaceRecAPI {
                     resolve("Hết băng thông rồi, 1 phút nữa quay lại test nhé :'("); return;
                 }
 
-                if (body.length == 0) {
+                if (body.length == 0 || typeof body[0] === "undefined") {
                     reject("Hình mờ ảo quá, chẳng thấy mặt đâu"); return;
                 }
                 else {
