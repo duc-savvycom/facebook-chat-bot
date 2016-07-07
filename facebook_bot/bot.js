@@ -53,7 +53,7 @@ class BotAsync {
         var youtubeFilter = new YoutubeFilter(["@nhạc", "@music", "@youtube", "@yt"]);
 
         var helpFilter = new ButtonFilter(["help", "giúp đỡ", "giúp với", "giúp mình", "giúp"],
-            `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.\n5. Xem hình gái xinh với cú pháp @gái.\n6. Tìm nhạc với cú pháp @music (@music sơn tùng)`, [{
+            `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì).\n2. Tìm bài theo từ khóa (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Gửi ảnh đồ vật cho bot nhận diện.\n5. Xem hình gái xinh với cú pháp @gái, @fap).\n6. Tìm nhạc với cú pháp @music (@music sơn tùng)\n`, [{
                 title: "Danh mục bài viết",
                 type: BUTTON_TYPE.POSTBACK,
                 payload: PAYLOAD.SEE_CATEGORIES
@@ -151,14 +151,13 @@ class BotAsync {
     }
 
     processImage(senderId, imageUrl) {
+        // Analyze both emo and image
+        faceRecAPI.analyzeImage(imageUrl).then((reply) => {
+            fbAPI.sendTextMessage(senderId, reply);
+        });
 
         faceRecAPI.analyzeEmo(imageUrl).then((reply) => {
             fbAPI.sendTextMessage(senderId, reply);
-        }).catch((error) => {
-            // If find no face, analyze image
-            faceRecAPI.analyzeImage(imageUrl).then((reply) => {
-                fbAPI.sendTextMessage(senderId, reply);
-            })
         });
     }
 

@@ -9,13 +9,13 @@ class FaceRecAPI {
     constructor() {
         this._faceKey = process.env.MS_FACE_TOKEN || atob("MmRhZTA1OWQ2NTNmNDdhZGE0NmJlMWJlZTE1ZjUxYzk=");
         this._faceApiUrl = "https://api.projectoxford.ai/emotion/v1.0/recognize";
-        
+
         this._analyzeKey = "162dcb4df892426e85d61a12c54f1719";
-        this._analyzeApiUrl = "https://api.projectoxford.ai/vision/v1.0/describe";
-        
+        this._analyzeApiUrl = "https://api.projectoxford.ai/vision/v1.0/analyze?visualFeatures=ImageType,Description";
+
     }
 
-    
+
     analyzeEmo(imageUrl) {
         return new Promise((resolve, reject) => {
             request({
@@ -30,15 +30,18 @@ class FaceRecAPI {
                 }
             }, (err, response, body) => {
                 if (err) {
-                    reject(err); return;
+                    reject(err);
+                    return;
                 }
 
                 if (response.statusCode == 403 || response.statusCode == 429) {
-                    resolve("Hết băng thông rồi, 1 phút nữa quay lại test nhé :'("); return;
+                    resolve("Hết băng thông rồi, 1 phút nữa quay lại test nhé :'(");
+                    return;
                 }
 
                 if (body.length == 0 || typeof body[0] === "undefined") {
-                    reject("Hình mờ ảo quá, chẳng thấy mặt đâu"); return;
+                    reject("Hình mờ ảo quá, chẳng thấy mặt đâu");
+                    return;
                 }
                 else {
                     var faceEmos = _.pairs(body[0].scores);
@@ -74,11 +77,25 @@ class FaceRecAPI {
                 }
             }, (err, response, body) => {
                 if (err) {
-                    reject(err); return;
+                    reject(err);
+                    return;
                 }
 
-                var reply = body.description.captions[0].text;
-                resolve(reply);
+                /*
+                    Non-clipart = 0,
+                    ambiguous = 1,
+                    normal-clipart = 2,
+                    good-clipart = 3.
+                */
+                var clipArtType = body.imageType.clipArtType;
+                if (clipArtType != 0) {
+                    resolve("Mình chỉ nhận dạng được ảnh chụp thui nhé. Hình vẽ, emo hay logo thì chịu :'(");
+                    return;
+                }
+                else {
+                    var reply = body.description.captions[0].text;
+                    resolve(reply);
+                }
             });
         }).then(googleAPI.translate.bind(googleAPI));
     }
