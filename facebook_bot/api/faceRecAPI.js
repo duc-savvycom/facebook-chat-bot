@@ -81,6 +81,10 @@ class FaceRecAPI {
                     return;
                 }
 
+                if (!body.imageType) {
+                    reject("");
+                    return;
+                }
                 /*
                     Non-clipart = 0,
                     ambiguous = 1,
