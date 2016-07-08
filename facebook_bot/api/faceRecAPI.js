@@ -38,6 +38,11 @@ class FaceRecAPI {
                     resolve("Hết băng thông rồi, 1 phút nữa quay lại test nhé :'(");
                     return;
                 }
+                
+                if (response.statusCode != 200) {
+                    reject("");
+                    return;
+                }
 
                 if (body.length == 0 || typeof body[0] === "undefined") {
                     reject("Hình mờ ảo quá, chẳng thấy mặt đâu");
@@ -81,10 +86,11 @@ class FaceRecAPI {
                     return;
                 }
 
-                if (!body.imageType) {
+                if (response.statusCode != 200) {
                     reject("");
                     return;
                 }
+                
                 /*
                     Non-clipart = 0,
                     ambiguous = 1,
