@@ -146,19 +146,22 @@ class BotAsync {
         })();
     }
 
-    sendAttachmentBack(senderId, attachment) {
-        fbAPI.sendAttachmentBack(senderId, attachment);
-    }
 
     processImage(senderId, imageUrl) {
-        // Analyze both emo and image
-        faceRecAPI.analyzeImage(imageUrl).then((reply) => {
-            fbAPI.sendTextMessage(senderId, reply);
-        });
+        // If the image is not an emo
+        if (imageUrl.includes("&oh=") && imageUrl.includes("&oe=")) {
+            faceRecAPI.analyzeImage(imageUrl).then((reply) => {
+                fbAPI.sendTextMessage(senderId, reply);
+            });
 
-        faceRecAPI.analyzeEmo(imageUrl).then((reply) => {
-            fbAPI.sendTextMessage(senderId, reply);
-        });
+            faceRecAPI.analyzeEmo(imageUrl).then((reply) => {
+                fbAPI.sendTextMessage(senderId, reply);
+            });
+        } else {
+            // Send emo back
+            fbAPI.sendImage(senderId, imageUrl);
+        }
+
     }
 
     processPostback(senderId, payload) {
