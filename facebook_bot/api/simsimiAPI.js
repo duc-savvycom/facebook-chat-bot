@@ -12,13 +12,18 @@ class SimsimiAPI {
 
     getMessage(text) {
         // Hot fix, remove this later
-        return Promise.resolve("Hôm nay bot mệt, nghỉ tạm. Hôm khác nói chuyện nhé.");
+        // return Promise.resolve("Hôm nay bot mệt, nghỉ tạm. Hôm khác nói chuyện nhé.");
         
         return new Promise((resolve, reject) => {
             request({
                 url: this._url + encodeURI(text),
                 method: "GET"
             }, (err, response, body) => {
+                if (err) {
+                    reject();
+                    return;
+                }
+                
                 var rs = JSON.parse(body);
                 if (rs.result === 100) {
                     resolve(rs.response);
@@ -38,6 +43,12 @@ class SimsimiAPI {
                 url: this._freeUrl + encodeURI(text),
                 method: "GET"
             }, (err, response, body) => {
+                                if (err) {
+                    reject();
+                    return;
+                }
+                
+                
                 var rs = JSON.parse(body);
                 var reply = rs.simsimi_talk_set.answers[0].sentence;
                 resolve(reply);               

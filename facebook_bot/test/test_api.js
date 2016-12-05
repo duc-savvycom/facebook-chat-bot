@@ -13,13 +13,14 @@ var await = require("asyncawait/await");
 // rhc env set <Variable>=<Value> <Variable2>=<Value2> -a fbchatbox
 // rhc env list -a fbchatbox  
 
+/*
 async(() =>{
     let results = await([
         faceRecAPI.analyzeImage("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/12985368_1051808628222443_8663602569549609913_n.jpg?oh=f60344027f7bf89e2319c33f3b38a131&oe=57F73973")   ]);
     console.log(results);
 })();
 
-/*
+
 async(() =>{
     let results = await([
         faceRecAPI.analyzeEmo("https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/12985368_1051808628222443_8663602569549609913_n.jpg?oh=f60344027f7bf89e2319c33f3b38a131&oe=57F73973"),
@@ -82,12 +83,14 @@ async(() =>{
     console.log(results);
 })();
 
+
+*/
+
 async(() =>{
     let results = await([
-        simsimiAPI.getMessageFree("anh iu em"),
-        simsimiAPI.getMessageFree("anh nhớ em"),
-        simsimiAPI.getMessageFree("em ăn gì chưa?"),
+        simsimiAPI.getMessage("anh iu em"),
+        simsimiAPI.getMessage("anh nhớ em"),
+        simsimiAPI.getMessage("em ăn gì chưa?"),
     ]);
     console.log(results);
 })();
-*/
