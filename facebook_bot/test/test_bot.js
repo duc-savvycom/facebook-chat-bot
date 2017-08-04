@@ -5,12 +5,12 @@ var async = require("asyncawait/async");
 var await = require("asyncawait/await");
 
 var spamOutput = "Server yếu lắm, đừng spam tội bot";
-var helloOutput = "Chào bạn, mềnh là bot tôi đi code dạo ^_^. Bạn thích đọc gì nào?";
+var helloOutput = "Chào bạn, mềnh là bot Funny Chat ^_^. Bạn thích đọc gì nào?";
 var unknownOutput = "Xin lỗi bot còn nhỏ dại nên không hiểu. Bạn gõ -help xem!";
 var goodbyeOutput = "Tạm biệt, hẹn gặp lại ;)";
-var adInfoOutput = "Ad là Pham Huy Hoàng, đập chai cute thông minh tinh tế <3. Bạn vào đây xem thêm nhé: https://toidicodedao.com/about/";
-var botInfoOutput = "Mình là chat bot Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute <3";
-var chuiLonOutput = "Bot là người nhân hậu, không chửi thề. Cút ngay không bố đập vỡ cmn ass bây giờ :v!";
+var adInfoOutput = "Ad là Nguyễn Trung Đức, đập chai cute thông minh tinh tế <3.";
+var botInfoOutput = "Mình là chat bot Funny Chat. Viết bởi anh Đức đập chai cute <3";
+var chuiLonOutput = "Bot là người nhân hậu, không chửi thề.";
 var thankyouOutput = "Không có chi. Rất vui vì đã giúp được cho bạn ^_^";
 var helpOutput = `Do bot mới được phát triển nên chỉ có 1 số tính năng sau:\n1. Hỏi linh tinh (ioc là gì, tao muốn học javascript).\n2. Tìm từ khóa với cú pháp [từ khóa] (Cho tao 4 bài [java]).\n3. Chém gió vui.\n4. Xem bài theo danh mục.`;
 

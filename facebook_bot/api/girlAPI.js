@@ -8,8 +8,7 @@ class GirlAPI {
         this._tumblrKey = process.env.TUMBLR_TOKEN || atob("STVKWUNTVnFueXBET1lrYjdZdHBZN1JLME91ZmRHT0ZKZ1FTNUZFaXp2eFNHcXEwRjA=") ;
         this._tumblrUrl = "https://api.tumblr.com/v2/blog/xkcn.info/posts/photo";
         
-        this._fbToken = process.env.FB_TOKEN ||
-            atob("RUFBV2phSmRjejE0QkFMVzR4OXIxM2FLY3daQVRKODRxVkFOekloNG5QNEpuNUdRM1lGSmV2cVpDbXRYTGMyN0FjbktIbkI3dk9LaWJ4WEIzbGx4dXZoSEUxYTkyRFpBbEpOaFpDMFNRZWRtWkNqZ3VVeWtDWFpBWkFtTFdBNHB3dDZicFFBRVJhMm5RZjJaQmVCbWFVUEJhWkJubkUwNFJEcHRxQzFCTHJiN21zQXdaRFpE");
+        this._fbToken = "EAAZAw0x57B2cBAFWwiNKeoEkmw30ZAjlRDMBlZCL0UCxytoyHvN2oKzu40LXOOOVlGffcxbMthA4RtHc7wMc3bdYjnefMEYUH9xYJOlt1ueBeQ528s7sBYB1QZArAGOXBmcssZCRKDmoqPrjVweXHo7dnmZByUwjIazotZBrX6H6GzfxBb3CuXS";
         this._pageId = "637434912950811"; // Xinh nhe nhang page
         this._fbUrl = `https://graph.facebook.com/v2.6/${this._pageId}/photos/`;
     }

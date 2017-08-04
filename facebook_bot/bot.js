@@ -28,7 +28,7 @@ class BotAsync {
         //this._helloFilter = new SimpleFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào"], "Chào bạn, mềnh là bot tôi đi code dạo ^_^");
 
         this._helloFilter = new ButtonFilter(["hi", "halo", "hế nhô", "he lo", "hello", "chào", "xin chào", "helo", "alo", "ê mày"],
-            "Chào bạn, mềnh là bot tôi đi code dạo ^_^. Bạn thích đọc gì nào?", [{
+            "Chào bạn, mềnh là bot Funny ^_^. Bạn thích đọc gì nào?", [{
                 title: "Nâng cao trình độ",
                 type: BUTTON_TYPE.POSTBACK,
                 payload: PAYLOAD.TECHNICAL_POST
@@ -67,12 +67,12 @@ class BotAsync {
                 "ban ten la gi", "ban ten gi", "ban la gi",
                 "bot ten gi", "bot ten la gi", "your name"
             ],
-            "Mình là chat bot Tôi đi code dạo. Viết bởi anh Hoàng đập chai cute <3");
+            "Mình là chat bot Funny. Viết bởi anh Đức đập chai cute <3");
         var adInfoFilter = new SimpleFilter(["ad la ai", "hoi ve ad", "ad ten gi", "who is ad",
                 "ad la thằng nào", "thong tin ve ad", "ad dau", "admin",
                 "ai viet ra may", "who made you", "ad la gi", "ad ten la gi"
             ],
-            "Ad là Pham Huy Hoàng, đập chai cute thông minh tinh tế <3. Bạn vào đây xem thêm nhé: https://toidicodedao.com/about/");
+            "Ad là Nguyễn Trung Đức, đập chai cute thông minh tinh tế <3. Bạn vào đây xem thêm nhé: https://toidicodedao.com/about/");
         var thankyouFilter = new SimpleFilter(["cảm ơn", "thank you", "thank", "nice", "hay qua",
             "gioi qua", "good job", "hay nhi", "hay ghe"
         ], "Không có chi. Rất vui vì đã giúp được cho bạn ^_^");
@@ -81,7 +81,7 @@ class BotAsync {
         var chuiLonFilter = new SimpleFilter(["dm", "dmm", "đậu xanh", "rau má", "dcm", "vkl", "vl", "du me", "may bi dien",
                 "bố láo", "ngu the", "me may", "ccmm", "ccmn", "bot ngu", "đờ mờ", "fuck", "fuck you"
             ],
-            "Bot là người nhân hậu, không chửi thề. Cút ngay không bố đập vỡ cmn ass bây giờ :v!");
+            "Bot là người nhân hậu, không chửi thề.");
         var testFilter = new SimpleFilter(["test"],
             "Đừng test nữa, mấy hôm nay người ta test nhiều quá bot mệt lắm rồi :'(");
         this._goodbyeFilter = new SimpleFilter(["tạm biệt", "bye", "bai bai", "good bye"], "Tạm biệt, hẹn gặp lại ;)");
@@ -96,7 +96,7 @@ class BotAsync {
     }
 
     setSender(sender) {
-        this._helloFilter.setOutput(`Chào ${sender.first_name}, mềnh là bot tôi đi code dạo ^_^. Bạn thích đọc gì nào?`);
+        this._helloFilter.setOutput(`Chào ${sender.first_name}, mềnh là bot Funny ^_^. Bạn thích đọc gì nào?`);
         this._goodbyeFilter.setOutput(`Tạm biệt ${sender.first_name}, hẹn gặp lại ;)`);
     }
 
