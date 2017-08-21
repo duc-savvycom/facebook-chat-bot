@@ -11,7 +11,7 @@ class SpamFilter {
     }
     reply(input) {
         return new Promise((resolve, reject) => resolve({
-            output: "Server yếu lắm, đừng spam tội bot",
+            output: "Hệ thống tạm dừng phục vụ. Xin vui lòng quay lại sau.",
             type: BOT_REPLY_TYPE.TEXT
         }));
     }

@@ -60,8 +60,10 @@ class GoogleAPI {
                     return;
                 }
                 
-                var translated = body.data.translations[0].translatedText;
-                resolve(translated);
+                if (body && body.data) {
+                    var translated = body.data.translations[0].translatedText;
+                    resolve(translated);   
+                }
             });
         });
     }

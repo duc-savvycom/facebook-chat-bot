@@ -17,11 +17,12 @@ app.use(bodyParser.urlencoded({
 var server = http.createServer(app);
 
 app.get('/', (req, res) => {
-  res.send("Home page. Server running okay.");
+  res.send("Home page. Server running ok.");
 });
 
+var verifyToken = 'trungduc286';
 app.get('/webhook', function(req, res) {
-  if (req.query['hub.verify_token'] === 'trungduc286') {
+  if (req.query['hub.verify_token'] === verifyToken) {
     res.send(req.query['hub.challenge']);
   }
   res.send('Error, wrong validation token');
@@ -38,14 +39,6 @@ app.post('/webhook', function(req, res) {
         // If user send text
         if (message.message.text) {
           bot.reply(senderId, message.message.text);
-        }
-        // If user send attachment
-        else if (message.message.attachments) {
-          //bot.sendAttachmentBack(senderId, message.message.attachments[0]);
-          if (message.message.attachments[0].payload != null) {
-            var imageUrl = message.message.attachments[0].payload.url;
-            bot.processImage(senderId, imageUrl);
-          }
         }
       }
       // If user click button
