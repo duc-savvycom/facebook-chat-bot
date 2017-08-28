@@ -7,6 +7,8 @@ var await = require("asyncawait/await");
 var express = require('express');
 
 var bot = require("./facebook_bot/bot");
+var BOT_REPLY_TYPE = require("./facebook_bot/constants").BOT_REPLY_TYPE;
+var SENDER_TYPE = require("./facebook_bot/constants").SENDER_TYPE;
 
 var app = express();
 app.use(logger('dev'));
@@ -31,20 +33,20 @@ app.get('/webhook', function(req, res) {
 app.post('/webhook', function(req, res) {
   var entries = req.body.entry;
   for (var entry of entries) {
-    log.info(entries);
     var messaging = entry.messaging;
     for (var message of messaging) {
       var senderId = message.sender.id;
       if (message.message) {
         // If user send text
         if (message.message.text) {
-          bot.reply(senderId, message.message.text);
+          bot.reply(senderId, message.message.text, SENDER_TYPE.USER);
         }
       }
       // If user click button
       else if (message.postback) {
         var payload = message.postback.payload;
-        bot.processPostback(senderId, payload);
+        var title = message.postback.title || '';
+        bot.processPostback(senderId, payload, title);
       }
     }
   }
